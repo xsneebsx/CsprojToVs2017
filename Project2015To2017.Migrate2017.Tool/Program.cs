@@ -47,6 +47,7 @@ namespace Project2015To2017.Migrate2017.Tool
 			}
 			finally
 			{
+				Console.ReadKey();
 				Log.CloseAndFlush();
 			}
 		}

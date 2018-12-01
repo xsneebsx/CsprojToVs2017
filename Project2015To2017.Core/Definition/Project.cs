@@ -36,6 +36,7 @@ namespace Project2015To2017.Definition
 		public string CodeFileExtension { get; set; }
 		public DirectoryInfo ProjectFolder => this.FilePath.Directory;
 		public Guid? ProjectGuid { get; set; }
+		public ISettings NuGetSettings { get; set; }
 
 		public bool HasMultipleAssemblyInfoFiles { get; set; }
 
@@ -55,8 +56,8 @@ namespace Project2015To2017.Definition
 			{
 				var projectFolder = this.ProjectFolder.FullName;
 
-				var nuGetSettings = Settings.LoadDefaultSettings(projectFolder);
-				var repositoryPathSetting = SettingsUtility.GetRepositoryPath(nuGetSettings);
+				NuGetSettings = Settings.LoadDefaultSettings(projectFolder);
+				var repositoryPathSetting = SettingsUtility.GetRepositoryPath(NuGetSettings);
 
 				//return the explicitly set path, or if there isn't one, then use the solution's path if one was provided.
 				//Otherwise assume a solution is one level above the project and therefore so is the 'packages' folder
@@ -85,6 +86,7 @@ namespace Project2015To2017.Definition
 
 		public IReadOnlyList<XElement> AssemblyAttributeProperties { get; set; } = Array.Empty<XElement>();
 
+		public bool IsWebProject { get; set; }
 		public bool IsWindowsFormsProject { get; set; }
 		public bool IsWindowsPresentationFoundationProject { get; set; }
 

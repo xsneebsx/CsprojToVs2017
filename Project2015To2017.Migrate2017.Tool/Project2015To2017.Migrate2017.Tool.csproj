@@ -1,9 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks Condition="$(Pack) != 'true'">net461;netcoreapp2.1</TargetFrameworks>
-		<TargetFramework Condition="$(Pack) == 'true'">netcoreapp2.1</TargetFramework>
-		<PackAsTool Condition="$(Pack) == 'true'">True</PackAsTool>
+		<TargetFrameworks >net461;</TargetFrameworks>
 
 		<AssemblyName>dotnet-migrate-2017</AssemblyName>
 		<PackageId>Project2015To2017.Migrate2017.Tool</PackageId>

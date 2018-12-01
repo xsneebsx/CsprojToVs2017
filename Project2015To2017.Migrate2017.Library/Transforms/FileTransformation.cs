@@ -33,8 +33,6 @@ namespace Project2015To2017.Migrate2017.Transforms
 			"Reference",
 			"ProjectReference",
 			"PackageReference",
-			"Antlr4",
-			"Antlr3"
 		};
 
 		private readonly ILogger logger;
@@ -80,7 +78,9 @@ namespace Project2015To2017.Migrate2017.Transforms
 					.Where(x => !string.IsNullOrEmpty(x))
 					.ToArray();
 
-				otherIncludeFilesMatchingWildcard = otherIncludeFilesMatchingWildcard.Union(PreviouslyExcludedFiles(definition, referencedItems)).ToArray();
+				otherIncludeFilesMatchingWildcard = otherIncludeFilesMatchingWildcard.Union(PreviouslyExcludedFiles(definition, referencedItems))
+					.Where(x => !x.EndsWith(".cs")) // TODO HACK to not exclude file
+					.ToArray();
 			}
 
 			if (otherIncludeFilesMatchingWildcard.Length > 0)

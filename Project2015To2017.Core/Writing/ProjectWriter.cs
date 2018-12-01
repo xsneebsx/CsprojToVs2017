@@ -179,6 +179,9 @@ namespace Project2015To2017.Writing
 			var netSdk = "Microsoft.NET.Sdk";
 			if (project.IsWindowsFormsProject || project.IsWindowsPresentationFoundationProject)
 				netSdk = SdkExtrasVersion;
+			else if (project.IsWebProject)
+				netSdk = "Microsoft.NET.Sdk.Web";
+
 			var projectNode = new XElement("Project", new XAttribute("Sdk", netSdk));
 
 			if (project.PropertyGroups != null)

@@ -59,11 +59,18 @@ namespace Project2015To2017.Reading
 				return null;
 			}
 
+			var webProject = false;
+			if (isModern)
+			{
+				webProject = projectXml.Element(XNamespace.None + "Project")?.FirstAttribute.Value == "Microsoft.NET.Sdk.Web";
+			}
+
 			var packageConfig = this.nuspecReader.Read(projectFile);
 
 			projectDefinition = new Project
 			{
 				IsModernProject = isModern,
+				IsWebProject = webProject,
 				FilePath = projectFile,
 				ProjectDocument = projectXml,
 				PackageConfiguration = packageConfig,
@@ -151,6 +158,30 @@ namespace Project2015To2017.Reading
 				.Split(';')
 				.Select(x => x.Trim().ToUpperInvariant())
 				.ToImmutableHashSet();
+
+			// Check if it's a web application
+			// Ref: https://www.codeproject.com/Reference/720512/List-of-Visual-Studio-Project-Type-GUIDs
+			var webGuids = new string[]
+			{
+				"{603C0E0B-DB56-11DC-BE95-000D561079B0}", // ASP.NET MVC 1
+				"{F85E285D-A4E0-4152-9332-AB1D724D3325}", // ASP.NET MVC 2
+				"{E53F8FEA-EAE0-44A6-8774-FFD645390401}", // ASP.NET MVC 3
+				"{E3E379DF-F4C6-4180-9B81-6769533ABE47}", // ASP.NET MVC 4
+				"{349C5851-65DF-11DA-9384-00065B846F21}", // Web Application (incl. MVC 5)
+				"{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}", // ASP.NET 5
+				"{F85E285D-A4E0-4152-9332-AB1D724D3325}", // Model-View-Controller v2 (MVC 2)
+				"{E53F8FEA-EAE0-44A6-8774-FFD645390401}", // Model-View-Controller v3 (MVC 3)
+				"{E3E379DF-F4C6-4180-9B81-6769533ABE47}", // Model-View-Controller v4 (MVC 4)
+				"{E24C65DC-7377-472B-9ABA-BC803B73C61A}", // Web Site
+			};
+			foreach (var webGuid in webGuids)
+			{
+				if (!guidTypes.Contains(webGuid))
+					continue;
+
+				project.IsWebProject = true;
+				return;
+			}
 
 			if (guidTypes.Contains("{EFBA0AD7-5A72-4C68-AF49-83D382785DCF}"))
 			{

@@ -85,6 +85,7 @@ namespace Project2015To2017.Definition
 
 		public IReadOnlyList<XElement> AssemblyAttributeProperties { get; set; } = Array.Empty<XElement>();
 
+		public bool IsWebProject { get; set; }
 		public bool IsWindowsFormsProject { get; set; }
 		public bool IsWindowsPresentationFoundationProject { get; set; }
 

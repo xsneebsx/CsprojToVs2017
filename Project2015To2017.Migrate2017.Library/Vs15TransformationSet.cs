@@ -35,7 +35,7 @@ namespace Project2015To2017.Migrate2017
 				new TestProjectPackageReferenceTransformation(logger),
 				new AssemblyFilterPackageReferencesTransformation(),
 				new AssemblyFilterHintedPackageReferencesTransformation(),
-				new AssemblyFilterDependantTransformation(),
+				new AssemblyFilterDefaultTransformation(),
 				new AssemblyFilterPackageKeepTopLevelOnlyTransformation(),
 				new ImportsTargetsFilterPackageReferencesTransformation(),
 				new FileTransformation(logger),
